@@ -20,17 +20,15 @@ jobs:
           repository: "${{ github.repository }}.wiki"
           path: .wiki
 
-      - name: Setup Golang
-        uses: actions/setup-go@v3
-
-      - name: Install protoc-gen-doc
-        run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+      # - name: Setup Golang
+      #   uses: actions/setup-go@v3
+      # - name: Install protoc-gen-doc
+      #   run: go install github.com/pseudomuto/protoc-gen-doc/cmd/protoc-gen-doc@latest
+      # - name: Generate API documents
+      #   run: protoc --doc_out=. --doc_opt=markdown,.wiki/api.md proto/*.proto
 
       - name: Generate API documents
-        run: protoc --doc_out=. --doc_opt=markdown,.wiki/api.md proto/*.proto
-
-      - name: Update hello pages
-        run: echo -e "# Hello\n\n$(date)" > .wiki/hello.md
+        run: docker run --rm -v $(pwd)/.wiki:/out -v $(pwd)/proto:/protos pseudomuto/protoc-gen-doc --doc_opt=markdown,api.md
 
       - name: Stage and count changes
         working-directory: .wiki
