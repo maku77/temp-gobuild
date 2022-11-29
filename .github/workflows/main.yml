@@ -28,7 +28,10 @@ jobs:
       #   run: protoc --doc_out=. --doc_opt=markdown,.wiki/api.md proto/*.proto
 
       - name: Generate API documents
-        run: docker run --rm -v $(pwd)/.wiki:/out -v $(pwd)/proto:/protos pseudomuto/protoc-gen-doc --doc_opt=markdown,api.md
+        run: docker run --rm -v $(pwd)/.wiki:/out -v $(pwd)/proto:/protos pseudomuto/protoc-gen-doc --doc_opt=markdown,API-documents.md
+
+      - name: Generate API documents (HTML)
+        run: docker run --rm -v $(pwd)/.wiki:/out -v $(pwd)/proto:/protos pseudomuto/protoc-gen-doc --doc_opt=html,API-docs.html
 
       - name: Stage and count changes
         working-directory: .wiki
