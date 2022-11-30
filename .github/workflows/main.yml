@@ -31,7 +31,7 @@ jobs:
       #   run: docker run --rm -v $(pwd)/.wiki:/out -v $(pwd)/proto:/protos pseudomuto/protoc-gen-doc --doc_opt=markdown,API-documents.md
 
       - name: Generate API documents
-        run: ./tools/gendoc.sh $GITHUB_WORKSPACE/.wiki
+        run: ./tools/gendoc.sh .wiki
 
       - name: Stage and count changes
         working-directory: .wiki
